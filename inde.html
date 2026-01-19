@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORN3D - Impressão 3D de Alta Qualidade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS - Estilização Profissional da Loja */
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #0056b3;
+            --dark-bg: #1a1a1a;
+            --light-bg: #f8f9fa;
+            --text-color: #333;
+            --white: #ffffff;
+            --gray: #6c757d;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--dark-bg);
+            color: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        header h1 span {
+            color: var(--primary-color);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .cart-icon {
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .cart-icon:hover {
+            color: var(--primary-color);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .hero .btn-primary {
+            padding: 1rem 2rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .hero .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 5%;
+            background-color: var(--white);
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--dark-bg);
+        }
+
+        .about p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--gray);
+        }
+
+        /* Products Section */
+        .products {
+            padding: 5rem 5%;
+            background-color: var(--light-bg);
+        }
+
+        .products h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--dark-bg);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-info p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .price {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .btn-add {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--dark-bg);
+            color: var(--white);
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .btn-add:hover {
+            background: var(--primary-color);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 5%;
+            background-color: var(--white);
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--dark-bg);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .contact-form button {
+            padding: 0.8rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .contact-form button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-bg);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 5%;
+        }
+
+        footer .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        footer h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        footer p,
+        footer a {
+            color: var(--gray);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+        }
+
+        footer a:hover {
+            color: var(--primary-color);
+        }
+
+        footer .copyright {
+            border-top: 1px solid var(--gray);
+            padding-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                display: none;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>ORN<span>3D</span></h1>
+        <nav>
+            <a href="#about">Sobre</a>
+            <a href="#products">Produtos</a>
+            <a href="#contact">Contato</a>
+        </nav>
+        <div class="cart-icon" onclick="openCart()">
+            🛒 Carrinho
+            <span class="cart-count" id="cart-count">0</span>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h2>Transformando camadas em realidade</h2>
+        <p>Decoração e utilitários em alta resistência e precisão. Explore nossa coleção de impressões 3D personalizadas.</p>
+        <a href="#products" class="btn-primary">Ver Produtos</a>
+    </section>
+
+    <section id="about" class="about">
+        <h2>Sobre a ORN3D</h2>
+        <p>Na ORN3D, somos especialistas em impressão 3D de alta qualidade. Utilizamos materiais premium como PETG para criar produtos duráveis e esteticamente agradáveis. Nossa missão é trazer inovação e criatividade para o seu dia a dia, transformando ideias em objetos tangíveis.</p>
+    </section>
+
+    <section id="products" class="products">
+        <h2>Nossos Produtos</h2>
+        
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/300x300?text=Vaso+Minimalista+ORN3D" alt="Vaso PETG">
+                </div>
+                <span class="product-tag">Material: PETG Premium</span>
+                <div class="product-info">
+                    <h3>Vaso Canelado Minimalista (11cm)</h3>
+                    <p>Design moderno para decoração de interiores. Ultra resistente e elegante.</p>
+                    <p class="price">R$ 45,90</p>
+                    <button class="btn-add" onclick="addToCart('Vaso Minimalista')">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/300x300?text=Suporte+Notebook" alt="Suporte Notebook">
+                </div>
+                <span class="product-tag">Office</span>
+                <div class="product-info">
+                    <h3>Suporte Ergonômico p/ Notebook</h3>
+                    <p>Melhore sua postura no trabalho com este suporte elegante e funcional.</p>
+                    <p class="price">R$ 89,00</p>
+                    <button class="btn-add" onclick="addToCart('Suporte Notebook')">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/300x300?text=Porta+Lápis" alt="Porta Lápis">
+                </div>
+                <span class="product-tag">Escritório</span>
+                <div class="product-info">
+                    <h3>Porta Lápis Geométrico</h3>
+                    <p>Organize sua mesa com estilo. Design moderno e resistente.</p>
+                    <p class="price">R$ 32,50</p>
+                    <button class="btn-add" onclick="addToCart('Porta Lápis')">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/300x300?text=Luminária+3D" alt="Luminária 3D">
+                </div>
+                <span class="product-tag">Decoração</span>
+                <div class="product-info">
+                    <h3>Luminária Abstrata 3D</h3>
+                    <p>Ilumine seu espaço com esta peça única de arte funcional.</p>
+                    <p class="price">R$ 120,00</p>
+                    <button class="btn-add" onclick="addToCart('Luminária 3D')">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Entre em Contato</h2>
+        <form class="contact-form">
+            <input type="text" placeholder="Seu Nome" required>
+            <input type="email" placeholder="Seu Email" required>
+            <textarea placeholder="Sua Mensagem" rows="5" required></textarea>
+            <button type="submit">Enviar Mensagem</button>
+        </form>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div>
+                <h3>ORN3D</h3>
+                <p>Impressão 3D de alta qualidade</p>
+            </div>
+            <div>
+                <h3>Links Úteis</h3>
+                <a href="#about">Sobre Nós</a>
+                <a href="#products">Produtos</a>
+                <a href="#contact">Contato</a>
+            </div>
+            <div>
+                <h3>Redes Sociais</h3>
+                <a href="#">Instagram</a>
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 ORN3D - Impressão 3D Profissional. Todos os direitos reservados.</p>
+            <p><small>Siga-nos para ver o processo de impressão e novidades!</small></p>
+        </div>
+    </footer>
+
+    <script>
+        /* JS - Lógica Melhorada da Loja */
+        let cartItems = 0;
+        let cart = [];
+
+        function addToCart(productName) {
+            cartItems++;
+            cart.push(productName);
+            document.getElementById('cart-count').innerText = cartItems;
+            
+            // Animação simples no botão
+            const button = event.target;
+            button.innerText = 'Adicionado!';
+            button.style.backgroundColor = '#28a745';
+            setTimeout(() => {
+                button.innerText = 'Adicionar ao Carrinho';
+                button.style.backgroundColor = '';
+            }, 1000);
+        }
+
+        function openCart() {
+            if(cartItems === 0) {
+                alert("Seu carrinho está vazio!");
+            } else {
+                let cartMessage = "Itens no carrinho:\n";
+                cart.forEach((item, index) => {
+                    cartMessage += `${index + 1}. ${item}\n`;
+                });
+                cartMessage += `\nTotal de itens: ${cartItems}\n\nFinalizar compra?`;
+                if(confirm(cartMessage)) {
+                    alert("Compra finalizada! (Funcionalidade completa em desenvolvimento)");
+                    cart = [];
+                    cartItems = 0;
+                    document.getElementById('cart-count').innerText = cartItems;
+                }
+            }
+        }
+
+        // Smooth scrolling para links de navegação
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
