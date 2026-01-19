@@ -363,6 +363,55 @@
             font-size: 0.9rem;
         }
 
+        /* Floating Icons */
+        .floating-icon {
+            position: fixed;
+            bottom: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            z-index: 1001;
+        }
+
+        .floating-icon:hover {
+            transform: scale(1.1);
+        }
+
+        #admin-icon {
+            left: 20px;
+            background: var(--white);
+            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            border: 1px solid #ddd;
+        }
+
+        #admin-icon:hover {
+            background: var(--light-bg);
+        }
+
+        #whatsapp-icon {
+            right: 20px;
+            background: #25d366;
+            color: var(--white);
+        }
+
+        #whatsapp-icon:hover {
+            background: #128c7e;
+        }
+
+        #whatsapp-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .hero h2 {
@@ -380,6 +429,22 @@
             header {
                 flex-direction: column;
                 gap: 1rem;
+            }
+
+            .floating-icon {
+                width: 45px;
+                height: 45px;
+            }
+
+            #admin-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+
+            #whatsapp-icon svg {
+                width: 20px;
+                height: 20px;
             }
         }
     </style>
@@ -413,58 +478,8 @@
     <section id="products" class="products">
         <h2>Nossos Produtos</h2>
         
-        <div class="products-grid">
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://via.placeholder.com/300x300?text=Vaso+Minimalista+ORN3D" alt="Vaso PETG">
-                </div>
-                <span class="product-tag">Material: PETG Premium</span>
-                <div class="product-info">
-                    <h3>Vaso Canelado Minimalista (11cm)</h3>
-                    <p>Design moderno para decoração de interiores. Ultra resistente e elegante.</p>
-                    <p class="price">R$ 45,90</p>
-                    <button class="btn-add" onclick="addToCart('Vaso Minimalista')">Adicionar ao Carrinho</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://via.placeholder.com/300x300?text=Suporte+Notebook" alt="Suporte Notebook">
-                </div>
-                <span class="product-tag">Office</span>
-                <div class="product-info">
-                    <h3>Suporte Ergonômico p/ Notebook</h3>
-                    <p>Melhore sua postura no trabalho com este suporte elegante e funcional.</p>
-                    <p class="price">R$ 89,00</p>
-                    <button class="btn-add" onclick="addToCart('Suporte Notebook')">Adicionar ao Carrinho</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://via.placeholder.com/300x300?text=Porta+Lápis" alt="Porta Lápis">
-                </div>
-                <span class="product-tag">Escritório</span>
-                <div class="product-info">
-                    <h3>Porta Lápis Geométrico</h3>
-                    <p>Organize sua mesa com estilo. Design moderno e resistente.</p>
-                    <p class="price">R$ 32,50</p>
-                    <button class="btn-add" onclick="addToCart('Porta Lápis')">Adicionar ao Carrinho</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://via.placeholder.com/300x300?text=Luminária+3D" alt="Luminária 3D">
-                </div>
-                <span class="product-tag">Decoração</span>
-                <div class="product-info">
-                    <h3>Luminária Abstrata 3D</h3>
-                    <p>Ilumine seu espaço com esta peça única de arte funcional.</p>
-                    <p class="price">R$ 120,00</p>
-                    <button class="btn-add" onclick="addToCart('Luminária 3D')">Adicionar ao Carrinho</button>
-                </div>
-            </div>
+        <div class="products-grid" id="products-grid">
+            <!-- Produtos serão carregados dinamicamente -->
         </div>
     </section>
 
@@ -489,6 +504,7 @@
                 <a href="#about">Sobre Nós</a>
                 <a href="#products">Produtos</a>
                 <a href="#contact">Contato</a>
+                <a href="admin.html">Painel Admin</a>
             </div>
             <div>
                 <h3>Redes Sociais</h3>
@@ -503,10 +519,89 @@
         </div>
     </footer>
 
+    <!-- Ícones Flutuantes -->
+    <div id="admin-icon" onclick="window.location.href='admin.html'" title="Painel Administrativo">
+        ⚙️
+    </div>
+    <div id="whatsapp-icon" class="floating-icon" onclick="openWhatsApp()" title="Fale conosco no WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.742.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488"/>
+        </svg>
+    </div>
+
     <script>
         /* JS - Lógica Melhorada da Loja */
         let cartItems = 0;
         let cart = [];
+
+        function openWhatsApp() {
+            const phone = '5511999999999'; // Substitua pelo número real do WhatsApp
+            const message = encodeURIComponent('Olá, gostaria de mais informações sobre os produtos ORN3D');
+            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+        }
+
+        // Carregar produtos do localStorage
+        function loadProducts() {
+            return JSON.parse(localStorage.getItem('orn3d_products')) || [
+                {
+                    id: '1',
+                    name: 'Vaso Canelado Minimalista (11cm)',
+                    description: 'Design moderno para decoração de interiores. Ultra resistente e elegante.',
+                    price: 45.90,
+                    image: 'https://via.placeholder.com/300x300?text=Vaso+Minimalista+ORN3D',
+                    tag: 'Material: PETG Premium'
+                },
+                {
+                    id: '2',
+                    name: 'Suporte Ergonômico p/ Notebook',
+                    description: 'Melhore sua postura no trabalho com este suporte elegante e funcional.',
+                    price: 89.00,
+                    image: 'https://via.placeholder.com/300x300?text=Suporte+Notebook',
+                    tag: 'Office'
+                },
+                {
+                    id: '3',
+                    name: 'Porta Lápis Geométrico',
+                    description: 'Organize sua mesa com estilo. Design moderno e resistente.',
+                    price: 32.50,
+                    image: 'https://via.placeholder.com/300x300?text=Porta+Lápis',
+                    tag: 'Escritório'
+                },
+                {
+                    id: '4',
+                    name: 'Luminária Abstrata 3D',
+                    description: 'Ilumine seu espaço com esta peça única de arte funcional.',
+                    price: 120.00,
+                    image: 'https://via.placeholder.com/300x300?text=Luminária+3D',
+                    tag: 'Decoração'
+                }
+            ];
+        }
+
+        // Renderizar produtos
+        function renderProducts() {
+            const products = loadProducts();
+            const productsGrid = document.getElementById('products-grid');
+            productsGrid.innerHTML = '';
+
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                        <span class="product-tag">${product.tag}</span>
+                    </div>
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <p class="price">R$ ${product.price.toFixed(2)}</p>
+                        <button class="btn-add" onclick="addToCart('${product.name}')">Adicionar ao Carrinho</button>
+                    </div>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+        }
 
         function addToCart(productName) {
             cartItems++;
@@ -550,6 +645,9 @@
                 });
             });
         });
+
+        // Inicializar produtos na carga da página
+        renderProducts();
     </script>
 
 </body>
