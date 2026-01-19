@@ -153,6 +153,63 @@
             color: var(--gray);
         }
 
+        /* Login */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .login-form {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .login-form h2 {
+            margin-bottom: 2rem;
+            color: var(--dark-bg);
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .login-form button {
+            padding: 0.8rem 2rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .login-form button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
         @media (max-width: 768px) {
             .product-item {
                 flex-direction: column;
@@ -166,11 +223,19 @@
     </style>
 </head>
 <body>
+    <div id="login-overlay" class="login-overlay">
+        <div class="login-form">
+            <h2>Acesso ao Painel Administrativo</h2>
+            <input type="password" id="password" placeholder="Digite a senha">
+            <button onclick="checkPassword()">Entrar</button>
+        </div>
+    </div>
+
     <header>
         <h1>Painel Administrativo - ORN3D</h1>
     </header>
 
-    <div class="container">
+    <div class="container" id="admin-container" class="hidden">
         <div class="admin-panel">
             <h2>Gerenciar Produtos</h2>
             <form id="product-form">
@@ -214,6 +279,19 @@
     </div>
 
     <script>
+        const PASSWORD = 'Kbmm858212*';
+
+        function checkPassword() {
+            const enteredPassword = document.getElementById('password').value;
+            if (enteredPassword === PASSWORD) {
+                document.getElementById('login-overlay').classList.add('hidden');
+                document.getElementById('admin-container').classList.remove('hidden');
+                renderProducts();
+            } else {
+                alert('Senha incorreta!');
+            }
+        }
+
         // Carregar produtos do localStorage
         function loadProducts() {
             const products = JSON.parse(localStorage.getItem('orn3d_products')) || getDefaultProducts();
@@ -362,9 +440,6 @@
             document.getElementById('product-id').value = '';
             document.getElementById('current-image').value = '';
         }
-
-        // Inicializar
-        renderProducts();
     </script>
 </body>
 </html>
