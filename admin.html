@@ -153,6 +153,13 @@
             color: var(--gray);
         }
 
+        /* Site Content */
+        .site-content {
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 1px solid #ddd;
+        }
+
         /* Login */
         .login-overlay {
             position: fixed;
@@ -275,6 +282,39 @@
                     <!-- Produtos serão carregados aqui -->
                 </div>
             </div>
+
+            <div class="site-content">
+                <h2>Editar Conteúdo do Site</h2>
+                <form id="site-form">
+                    <div class="form-group">
+                        <label for="hero-title">Título do Hero:</label>
+                        <input type="text" id="hero-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hero-subtitle">Subtítulo do Hero:</label>
+                        <input type="text" id="hero-subtitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hero-image">Imagem do Hero:</label>
+                        <input type="file" id="hero-image" accept="image/*">
+                        <small style="color: var(--gray);">Selecione uma nova imagem para o fundo do hero.</small>
+                    </div>
+                    <input type="hidden" id="current-hero-image">
+                    <div class="form-group">
+                        <label for="about-text">Texto Sobre:</label>
+                        <textarea id="about-text" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="footer-text">Texto do Footer:</label>
+                        <input type="text" id="footer-text" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="footer-small">Texto Pequeno do Footer:</label>
+                        <input type="text" id="footer-small" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar Conteúdo</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -287,6 +327,7 @@
                 document.getElementById('login-overlay').classList.add('hidden');
                 document.getElementById('admin-container').classList.remove('hidden');
                 renderProducts();
+                loadSiteContent();
             } else {
                 alert('Senha incorreta!');
             }
@@ -434,12 +475,69 @@
             }
         }
 
-        // Limpar formulário
+        // Limpar formulário produto
         function clearForm() {
             document.getElementById('product-form').reset();
             document.getElementById('product-id').value = '';
             document.getElementById('current-image').value = '';
         }
+
+        // Carregar conteúdo do site
+        function loadSiteContent() {
+            const content = JSON.parse(localStorage.getItem('orn3d_site_content')) || getDefaultSiteContent();
+            document.getElementById('hero-title').value = content.heroTitle;
+            document.getElementById('hero-subtitle').value = content.heroSubtitle;
+            document.getElementById('current-hero-image').value = content.heroImage;
+            document.getElementById('about-text').value = content.aboutText;
+            document.getElementById('footer-text').value = content.footerText;
+            document.getElementById('footer-small').value = content.footerSmall;
+        }
+
+        // Conteúdo padrão do site
+        function getDefaultSiteContent() {
+            return {
+                heroTitle: 'Transformando camadas em realidade',
+                heroSubtitle: 'Decoração e utilitários em alta resistência e precisão. Explore nossa coleção de impressões 3D personalizadas.',
+                heroImage: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1350&q=80',
+                aboutText: 'Na ORN3D, somos especialistas em impressão 3D de alta qualidade. Utilizamos materiais premium como PETG para criar produtos duráveis e esteticamente agradáveis. Nossa missão é trazer inovação e criatividade para o seu dia a dia, transformando ideias em objetos tangíveis.',
+                footerText: '&copy; 2024 ORN3D - Impressão 3D Profissional. Todos os direitos reservados.',
+                footerSmall: 'Siga-nos para ver o processo de impressão e novidades!'
+            };
+        }
+
+        // Salvar conteúdo do site
+        function saveSiteContent(content) {
+            localStorage.setItem('orn3d_site_content', JSON.stringify(content));
+        }
+
+        // Formulário do site
+        document.getElementById('site-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const heroTitle = document.getElementById('hero-title').value;
+            const heroSubtitle = document.getElementById('hero-subtitle').value;
+            const footerText = document.getElementById('footer-text').value;
+            const footerSmall = document.getElementById('footer-small').value;
+            const aboutText = document.getElementById('about-text').value;
+            const fileInput = document.getElementById('hero-image');
+            const file = fileInput.files[0];
+            const currentHeroImage = document.getElementById('current-hero-image').value;
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageData = e.target.result;
+                    const content = { heroTitle, heroSubtitle, heroImage: imageData, aboutText, footerText, footerSmall };
+                    saveSiteContent(content);
+                    alert('Conteúdo salvo com sucesso!');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                const content = { heroTitle, heroSubtitle, heroImage: currentHeroImage, aboutText, footerText, footerSmall };
+                saveSiteContent(content);
+                alert('Conteúdo salvo com sucesso!');
+            }
+        });
     </script>
 </body>
 </html>
