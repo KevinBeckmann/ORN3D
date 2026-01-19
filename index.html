@@ -100,6 +100,49 @@
             text-align: center;
         }
 
+        /* Promotions Section */
+        .promotions {
+            padding: 2rem 0;
+            background: transparent;
+            overflow: hidden;
+        }
+
+        .promo-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .promo-scroll {
+            display: inline-block;
+            animation: scroll 25s linear infinite;
+            will-change: transform;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0%);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .promo-card {
+            display: inline-block;
+            margin: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .promo-card img {
+            width: 280px;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
         /* Hero Section */
         .hero {
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1350&q=80');
@@ -281,6 +324,105 @@
             background: var(--primary-color);
         }
 
+        /* Checkout Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 1rem;
+            color: var(--dark-bg);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .payment-btn {
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .payment-btn.credit {
+            background: #007bff;
+            color: white;
+        }
+
+        .payment-btn.debit {
+            background: #28a745;
+            color: white;
+        }
+
+        .payment-btn.pix {
+            background: #ffc107;
+            color: black;
+        }
+
+        .payment-btn:hover {
+            opacity: 0.8;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
         /* Contact Section */
         .contact {
             padding: 5rem 5%;
@@ -446,6 +588,25 @@
                 width: 20px;
                 height: 20px;
             }
+
+            .promo-card img {
+                width: 200px;
+                height: 120px;
+            }
+
+            .modal-content {
+                padding: 1rem;
+            }
+
+            .payment-options {
+                gap: 0.5rem;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -465,14 +626,47 @@
     </header>
 
     <section class="hero">
-        <h2>Transformando camadas em realidade</h2>
-        <p>Decoração e utilitários em alta resistência e precisão. Explore nossa coleção de impressões 3D personalizadas.</p>
+        <h2 id="hero-title">Transformando camadas em realidade</h2>
+        <p id="hero-subtitle">Decoração e utilitários em alta resistência e precisão. Explore nossa coleção de impressões 3D personalizadas.</p>
         <a href="#products" class="btn-primary">Ver Produtos</a>
     </section>
 
-    <section id="about" class="about">
-        <h2>Sobre a ORN3D</h2>
-        <p>Na ORN3D, somos especialistas em impressão 3D de alta qualidade. Utilizamos materiais premium como PETG para criar produtos duráveis e esteticamente agradáveis. Nossa missão é trazer inovação e criatividade para o seu dia a dia, transformando ideias em objetos tangíveis.</p>
+    <section class="promotions">
+        <div class="promo-container">
+            <div class="promo-scroll">
+                <div class="promo-card">
+                    <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=300&q=80" alt="Promoção 1">
+                </div>
+                <div class="promo-card">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=300&q=80" alt="Promoção 2">
+                </div>
+                <div class="promo-card">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=300&q=80" alt="Promoção 3">
+                </div>
+                <div class="promo-card">
+                    <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=300&q=80" alt="Promoção 4">
+                </div>
+                <div class="promo-card">
+                    <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?auto=format&fit=crop&w=300&q=80" alt="Promoção 5">
+                </div>
+                <!-- Duplicar para scroll contínuo -->
+                <div class="promo-card">
+                    <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=300&q=80" alt="Promoção 1">
+                </div>
+                <div class="promo-card">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=300&q=80" alt="Promoção 2">
+                </div>
+                <div class="promo-card">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=300&q=80" alt="Promoção 3">
+                </div>
+                <div class="promo-card">
+                    <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=300&q=80" alt="Promoção 4">
+                </div>
+                <div class="promo-card">
+                    <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?auto=format&fit=crop&w=300&q=80" alt="Promoção 5">
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="products" class="products">
@@ -481,6 +675,11 @@
         <div class="products-grid" id="products-grid">
             <!-- Produtos serão carregados dinamicamente -->
         </div>
+    </section>
+
+    <section id="about" class="about">
+        <h2>Sobre a ORN3D</h2>
+        <p id="about-text">Na ORN3D, somos especialistas em impressão 3D de alta qualidade. Utilizamos materiais premium como PETG para criar produtos duráveis e esteticamente agradáveis. Nossa missão é trazer inovação e criatividade para o seu dia a dia, transformando ideias em objetos tangíveis.</p>
     </section>
 
     <section id="contact" class="contact">
@@ -492,6 +691,41 @@
             <button type="submit">Enviar Mensagem</button>
         </form>
     </section>
+
+    <!-- Modal de Checkout -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Finalizar Compra</h2>
+            <div id="cart-summary"></div>
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label for="customer-name">Nome Completo:</label>
+                    <input type="text" id="customer-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="customer-email">Email:</label>
+                    <input type="email" id="customer-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="customer-address">Endereço Completo:</label>
+                    <textarea id="customer-address" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="cep">CEP:</label>
+                    <input type="text" id="cep" placeholder="00000-000" required>
+                    <button type="button" onclick="calculateFreight()">Calcular Frete</button>
+                </div>
+                <div id="freight-result"></div>
+                <h3>Escolha o método de pagamento:</h3>
+                <div class="payment-options">
+                    <button type="button" class="payment-btn credit" onclick="processPayment('Cartão de Crédito')">Cartão de Crédito</button>
+                    <button type="button" class="payment-btn debit" onclick="processPayment('Cartão de Débito')">Cartão de Débito</button>
+                    <button type="button" class="payment-btn pix" onclick="processPayment('PIX')">PIX</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <footer>
         <div class="footer-content">
@@ -514,8 +748,8 @@
             </div>
         </div>
         <div class="copyright">
-            <p>&copy; 2024 ORN3D - Impressão 3D Profissional. Todos os direitos reservados.</p>
-            <p><small>Siga-nos para ver o processo de impressão e novidades!</small></p>
+            <p id="footer-text">&copy; 2024 ORN3D - Impressão 3D Profissional. Todos os direitos reservados.</p>
+            <p><small id="footer-small">Siga-nos para ver o processo de impressão e novidades!</small></p>
         </div>
     </footer>
 
@@ -578,6 +812,25 @@
             ];
         }
 
+        // Carregar conteúdo do site
+        function loadSiteContent() {
+            const content = JSON.parse(localStorage.getItem('orn3d_site_content')) || {
+                heroTitle: 'Transformando camadas em realidade',
+                heroSubtitle: 'Decoração e utilitários em alta resistência e precisão. Explore nossa coleção de impressões 3D personalizadas.',
+                heroImage: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1350&q=80',
+                aboutText: 'Na ORN3D, somos especialistas em impressão 3D de alta qualidade. Utilizamos materiais premium como PETG para criar produtos duráveis e esteticamente agradáveis. Nossa missão é trazer inovação e criatividade para o seu dia a dia, transformando ideias em objetos tangíveis.',
+                footerText: '&copy; 2024 ORN3D - Impressão 3D Profissional. Todos os direitos reservados.',
+                footerSmall: 'Siga-nos para ver o processo de impressão e novidades!'
+            };
+
+            document.getElementById('hero-title').textContent = content.heroTitle;
+            document.getElementById('hero-subtitle').textContent = content.heroSubtitle;
+            document.querySelector('.hero').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${content.heroImage}')`;
+            document.getElementById('about-text').textContent = content.aboutText;
+            document.getElementById('footer-text').innerHTML = content.footerText;
+            document.getElementById('footer-small').textContent = content.footerSmall;
+        }
+
         // Renderizar produtos
         function renderProducts() {
             const products = loadProducts();
@@ -622,18 +875,44 @@
             if(cartItems === 0) {
                 alert("Seu carrinho está vazio!");
             } else {
-                let cartMessage = "Itens no carrinho:\n";
-                cart.forEach((item, index) => {
-                    cartMessage += `${index + 1}. ${item}\n`;
-                });
-                cartMessage += `\nTotal de itens: ${cartItems}\n\nFinalizar compra?`;
-                if(confirm(cartMessage)) {
-                    alert("Compra finalizada! (Funcionalidade completa em desenvolvimento)");
-                    cart = [];
-                    cartItems = 0;
-                    document.getElementById('cart-count').innerText = cartItems;
-                }
+                showCheckoutModal();
             }
+        }
+
+        function showCheckoutModal() {
+            const modal = document.getElementById('checkout-modal');
+            const summary = document.getElementById('cart-summary');
+            summary.innerHTML = `<p>Itens no carrinho: ${cartItems}</p><ul>${cart.map(item => `<li>${item}</li>`).join('')}</ul>`;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('checkout-modal').style.display = 'none';
+        }
+
+        function calculateFreight() {
+            const cep = document.getElementById('cep').value;
+            if (cep.length === 9) { // Simples validação
+                const freight = Math.floor(Math.random() * 20) + 10; // Simulação
+                document.getElementById('freight-result').innerHTML = `<p>Frete: R$ ${freight.toFixed(2)}</p>`;
+            } else {
+                alert('CEP inválido');
+            }
+        }
+
+        function processPayment(method) {
+            const name = document.getElementById('customer-name').value;
+            const email = document.getElementById('customer-email').value;
+            const address = document.getElementById('customer-address').value;
+            if (!name || !email || !address) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+            alert(`Pagamento via ${method} processado com sucesso! (Simulação)`);
+            cart = [];
+            cartItems = 0;
+            document.getElementById('cart-count').innerText = cartItems;
+            closeModal();
         }
 
         // Smooth scrolling para links de navegação
@@ -646,7 +925,8 @@
             });
         });
 
-        // Inicializar produtos na carga da página
+        // Inicializar
+        loadSiteContent();
         renderProducts();
     </script>
 
