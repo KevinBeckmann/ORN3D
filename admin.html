@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - ORN3D</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #0056b3;
+            --dark-bg: #1a1a1a;
+            --light-bg: #f8f9fa;
+            --text-color: #333;
+            --white: #ffffff;
+            --gray: #6c757d;
+            --success: #28a745;
+            --danger: #dc3545;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--dark-bg);
+            color: var(--white);
+            padding: 1rem 5%;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .admin-panel {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .admin-panel h2 {
+            margin-bottom: 2rem;
+            color: var(--dark-bg);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-right: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: var(--white);
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .products-list {
+            margin-top: 3rem;
+        }
+
+        .products-list h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-bg);
+        }
+
+        .product-item {
+            background: var(--light-bg);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-item h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .product-item p {
+            color: var(--gray);
+        }
+
+        @media (max-width: 768px) {
+            .product-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .product-item .actions {
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Painel Administrativo - ORN3D</h1>
+    </header>
+
+    <div class="container">
+        <div class="admin-panel">
+            <h2>Gerenciar Produtos</h2>
+            <form id="product-form">
+                <div class="form-group">
+                    <label for="product-id">ID do Produto (deixe vazio para novo):</label>
+                    <input type="text" id="product-id" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="product-name">Nome do Produto:</label>
+                    <input type="text" id="product-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-description">Descrição:</label>
+                    <textarea id="product-description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="product-price">Preço (R$):</label>
+                    <input type="number" id="product-price" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-image">Imagem do Produto:</label>
+                    <input type="file" id="product-image" accept="image/*">
+                    <small style="color: var(--gray);">Selecione uma imagem do seu dispositivo. Para editar, selecione uma nova imagem.</small>
+                </div>
+                <input type="hidden" id="current-image">
+                <div class="form-group">
+                    <label for="product-tag">Tag/Categoria:</label>
+                    <input type="text" id="product-tag" placeholder="Ex: Material: PETG Premium">
+                </div>
+                <button type="submit" class="btn btn-primary">Salvar Produto</button>
+                <button type="button" class="btn btn-danger" onclick="clearForm()">Limpar</button>
+            </form>
+
+            <div class="products-list">
+                <h3>Produtos Existentes</h3>
+                <div id="products-list">
+                    <!-- Produtos serão carregados aqui -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Carregar produtos do localStorage
+        function loadProducts() {
+            const products = JSON.parse(localStorage.getItem('orn3d_products')) || getDefaultProducts();
+            return products;
+        }
+
+        // Produtos padrão se nenhum estiver salvo
+        function getDefaultProducts() {
+            return [
+                {
+                    id: '1',
+                    name: 'Vaso Canelado Minimalista (11cm)',
+                    description: 'Design moderno para decoração de interiores. Ultra resistente e elegante.',
+                    price: 45.90,
+                    image: 'https://via.placeholder.com/300x300?text=Vaso+Minimalista+ORN3D',
+                    tag: 'Material: PETG Premium'
+                },
+                {
+                    id: '2',
+                    name: 'Suporte Ergonômico p/ Notebook',
+                    description: 'Melhore sua postura no trabalho com este suporte elegante e funcional.',
+                    price: 89.00,
+                    image: 'https://via.placeholder.com/300x300?text=Suporte+Notebook',
+                    tag: 'Office'
+                },
+                {
+                    id: '3',
+                    name: 'Porta Lápis Geométrico',
+                    description: 'Organize sua mesa com estilo. Design moderno e resistente.',
+                    price: 32.50,
+                    image: 'https://via.placeholder.com/300x300?text=Porta+Lápis',
+                    tag: 'Escritório'
+                },
+                {
+                    id: '4',
+                    name: 'Luminária Abstrata 3D',
+                    description: 'Ilumine seu espaço com esta peça única de arte funcional.',
+                    price: 120.00,
+                    image: 'https://via.placeholder.com/300x300?text=Luminária+3D',
+                    tag: 'Decoração'
+                }
+            ];
+        }
+
+        // Salvar produtos no localStorage
+        function saveProducts(products) {
+            localStorage.setItem('orn3d_products', JSON.stringify(products));
+        }
+
+        // Renderizar lista de produtos
+        function renderProducts() {
+            const products = loadProducts();
+            const productsList = document.getElementById('products-list');
+            productsList.innerHTML = '';
+
+            products.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <div>
+                        <h4>${product.name}</h4>
+                        <p>${product.description}</p>
+                        <p>Preço: R$ ${product.price.toFixed(2)}</p>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-success" onclick="editProduct('${product.id}')">Editar</button>
+                        <button class="btn btn-danger" onclick="deleteProduct('${product.id}')">Excluir</button>
+                    </div>
+                `;
+                productsList.appendChild(productItem);
+            });
+        }
+
+        // Adicionar/Editar produto
+        document.getElementById('product-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('product-id').value || Date.now().toString();
+            const name = document.getElementById('product-name').value;
+            const description = document.getElementById('product-description').value;
+            const price = parseFloat(document.getElementById('product-price').value);
+            const tag = document.getElementById('product-tag').value;
+            const fileInput = document.getElementById('product-image');
+            const file = fileInput.files[0];
+            const currentImage = document.getElementById('current-image').value;
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageData = e.target.result;
+                    saveProduct(id, name, description, price, imageData, tag);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                saveProduct(id, name, description, price, currentImage, tag);
+            }
+        });
+
+        function saveProduct(id, name, description, price, image, tag) {
+            const product = { id, name, description, price, image, tag };
+
+            const products = loadProducts();
+            const existingIndex = products.findIndex(p => p.id === id);
+
+            if (existingIndex >= 0) {
+                products[existingIndex] = product;
+            } else {
+                products.push(product);
+            }
+
+            saveProducts(products);
+            renderProducts();
+            clearForm();
+            alert('Produto salvo com sucesso!');
+        }
+
+        // Editar produto
+        function editProduct(id) {
+            const products = loadProducts();
+            const product = products.find(p => p.id === id);
+            
+            if (product) {
+                document.getElementById('product-id').value = product.id;
+                document.getElementById('product-name').value = product.name;
+                document.getElementById('product-description').value = product.description;
+                document.getElementById('product-price').value = product.price;
+                document.getElementById('current-image').value = product.image;
+                document.getElementById('product-tag').value = product.tag;
+                // Clear file input
+                document.getElementById('product-image').value = '';
+            }
+        }
+
+        // Excluir produto
+        function deleteProduct(id) {
+            if (confirm('Tem certeza que deseja excluir este produto?')) {
+                const products = loadProducts().filter(p => p.id !== id);
+                saveProducts(products);
+                renderProducts();
+            }
+        }
+
+        // Limpar formulário
+        function clearForm() {
+            document.getElementById('product-form').reset();
+            document.getElementById('product-id').value = '';
+            document.getElementById('current-image').value = '';
+        }
+
+        // Inicializar
+        renderProducts();
+    </script>
+</body>
+</html>
