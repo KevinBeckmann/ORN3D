@@ -3,932 +3,430 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ORN3D - Impressão 3D de Alta Qualidade</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Gerador de Certificados Técnicos</title>
     <style>
-        /* CSS - Estilização Profissional da Loja */
-        :root {
-            --primary-color: #007bff;
-            --secondary-color: #0056b3;
-            --dark-bg: #1a1a1a;
-            --light-bg: #f8f9fa;
-            --text-color: #333;
-            --white: #ffffff;
-            --gray: #6c757d;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Dancing+Script&family=Roboto:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
+        :root {
+            --print-width: 800px;
+            --print-height: 1000px;
+            --text-letter-spacing: 0px;
+            --text-word-spacing: 0px;
         }
 
         body {
-            background-color: var(--light-bg);
-            color: var(--text-color);
-            line-height: 1.6;
-            overflow-x: hidden;
+            background-color: #2c3e50;
+            margin: 0;
+            display: flex;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
         }
 
-        /* Header */
-        header {
-            background-color: var(--dark-bg);
-            color: var(--white);
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* Painel de Controle (Esquerda) */
+        .admin-panel {
+            width: 500px; /* Aumentado para acomodar novos controles */
+            padding: 30px;
+            background-color: #1a252f;
+            height: 100vh;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
             position: sticky;
             top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow);
-        }
-
-        header h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        header h1 span {
-            color: var(--primary-color);
-        }
-
-        nav {
-            display: flex;
-            gap: 2rem;
-        }
-
-        nav a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        nav a:hover {
-            color: var(--primary-color);
-        }
-
-        .cart-icon {
-            cursor: pointer;
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .cart-icon:hover {
-            color: var(--primary-color);
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            min-width: 18px;
-            text-align: center;
-        }
-
-        /* Promotions Section */
-        .promotions {
-            padding: 2rem 0;
-            background: transparent;
-            overflow: hidden;
-        }
-
-        .promo-container {
-            overflow: hidden;
-            white-space: nowrap;
-            position: relative;
-        }
-
-        .promo-scroll {
-            display: inline-block;
-            animation: scroll 25s linear infinite;
-            will-change: transform;
-        }
-
-        @keyframes scroll {
-            0% {
-                transform: translateX(0%);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        .promo-card {
-            display: inline-block;
-            margin: 0;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        .promo-card img {
-            width: 280px;
-            height: 180px;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            height: 60vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: var(--white);
-            text-align: center;
-            padding: 0 2rem;
-        }
-
-        .hero h2 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            font-weight: 300;
-            margin-bottom: 2rem;
-            max-width: 600px;
-        }
-
-        .hero .btn-primary {
-            padding: 1rem 2rem;
-            background-color: var(--primary-color);
-            color: var(--white);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 500;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-        }
-
-        .hero .btn-primary:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-        }
-
-        /* About Section */
-        .about {
-            padding: 5rem 5%;
-            background-color: var(--white);
-            text-align: center;
-        }
-
-        .about h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            color: var(--dark-bg);
-        }
-
-        .about p {
-            font-size: 1.1rem;
-            max-width: 800px;
-            margin: 0 auto;
-            color: var(--gray);
-        }
-
-        /* Products Section */
-        .products {
-            padding: 5rem 5%;
-            background-color: var(--light-bg);
-        }
-
-        .products h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            color: var(--dark-bg);
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .product-card {
-            background: var(--white);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 250px;
-            background-color: #e9ecef;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .product-image:hover img {
-            transform: scale(1.05);
-        }
-
-        .product-tag {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: var(--primary-color);
-            color: var(--white);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            text-transform: uppercase;
-        }
-
-        .product-info {
-            padding: 1.5rem;
-        }
-
-        .product-info h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-info p {
-            color: var(--gray);
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .price {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .btn-add {
-            display: block;
-            width: 100%;
-            padding: 0.8rem;
-            background: var(--dark-bg);
-            color: var(--white);
-            text-align: center;
-            text-decoration: none;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
-        }
-
-        .btn-add:hover {
-            background: var(--primary-color);
-        }
-
-        /* Checkout Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
             overflow-y: auto;
         }
 
-        .modal-content h2 {
-            margin-bottom: 1rem;
-            color: var(--dark-bg);
-        }
+        h2 { border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 0; }
 
-        .form-group {
-            margin-bottom: 1rem;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group textarea {
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-size: 14px; color: #bdc3c7; }
+        input, textarea, select {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
+            padding: 10px;
+            background: #2c3e50;
+            border: 1px solid #34495e;
+            color: white;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: inherit;
         }
 
-        .form-group textarea {
+        textarea {
             resize: vertical;
-            min-height: 80px;
         }
 
-        .payment-options {
+        .form-row {
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 1rem;
+            gap: 10px;
         }
+        .form-row > * { flex: 1; }
 
-        .payment-btn {
-            padding: 1rem;
+        .btn-print {
+            width: 100%;
+            padding: 15px;
+            background-color: #27ae60;
+            color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 1rem;
+            border-radius: 5px;
+            font-weight: bold;
             cursor: pointer;
-            transition: var(--transition);
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        .btn-print:hover { background-color: #2ecc71; }
+
+        /* Área de Visualização (Direita) */
+        .preview-area {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            background-color: #34495e;
         }
 
-        .payment-btn.credit {
-            background: #007bff;
-            color: white;
+        /* Estilo do Certificado (Baseado na Imagem Original) */
+        .certificate {
+            width: var(--print-width);
+            height: var(--print-height);
+            background-color: white;
+            padding: 60px;
+            position: relative;
+            box-sizing: border-box;
+            color: #333;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            font-family: var(--cert-font-family, 'Montserrat', sans-serif);
         }
 
-        .payment-btn.debit {
-            background: #28a745;
-            color: white;
-        }
-
-        .payment-btn.pix {
-            background: #ffc107;
-            color: black;
-        }
-
-        .payment-btn:hover {
-            opacity: 0.8;
-        }
-
-        .close {
+        .certificate::before {
+            content: "";
             position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 2rem;
-            cursor: pointer;
+            top: 20px; bottom: 20px; left: 20px; right: 20px;
+            border: 1px solid #e0e0e0;
         }
 
-        /* Contact Section */
-        .contact {
-            padding: 5rem 5%;
-            background-color: var(--white);
-            text-align: center;
+        .watermark {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.05;
+            background-image: url('https://www.transparenttextures.com/patterns/circuit-board.png');
+            pointer-events: none;
         }
 
-        .contact h2 {
-            font-size: 2.5rem;
+        .cert-title {
+            font-size: 32px;
+            text-transform: uppercase;
             font-weight: 700;
-            margin-bottom: 2rem;
-            color: var(--dark-bg);
+            margin-top: 100px;
+            letter-spacing: 2px;
+            font-family: var(--title-font-family, 'Montserrat', sans-serif);
         }
 
-        .contact-form {
+        .cert-subtitle { 
+            font-size: 18px; 
+            margin-top: 40px; 
+            font-family: var(--subtitle-font-family, 'Montserrat', sans-serif);
+        }
+        
+        .cert-name {
+            font-size: 42px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 20px 0 40px;
+            border-bottom: none;
+            font-family: var(--name-font-family, 'Montserrat', sans-serif);
+        }
+
+        .cert-text {
+            font-size: 16px;
+            line-height: 1.8;
             max-width: 600px;
-            margin: 0 auto;
-            display: grid;
-            gap: 1rem;
+            margin: 0 auto 40px; /* Espaço adicionado entre texto e lista */
+            white-space: pre-wrap;
+            font-family: var(--text-font-family, 'Montserrat', sans-serif);
+            text-align: var(--text-align, center);
+            letter-spacing: var(--text-letter-spacing);
+            word-spacing: var(--text-word-spacing);
         }
 
-        .contact-form input,
-        .contact-form textarea {
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-
-        .contact-form button {
-            padding: 0.8rem;
-            background-color: var(--primary-color);
-            color: var(--white);
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .contact-form button:hover {
-            background-color: var(--secondary-color);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark-bg);
-            color: var(--white);
+        .topics-heading {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 10px;
             text-align: center;
-            padding: 3rem 5%;
+            font-family: var(--text-font-family, 'Montserrat', sans-serif);
         }
 
-        footer .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+        .topics-list {
+            list-style-type: disc;
+            text-align: var(--list-align, left);
+            margin: 10px auto 20px;
+            max-width: 600px;
+            padding-left: 40px;
+            font-size: 16px;
+            line-height: 1.8;
+            font-family: var(--text-font-family, 'Montserrat', sans-serif);
+            letter-spacing: var(--text-letter-spacing);
+            word-spacing: var(--text-word-spacing);
         }
 
-        footer h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
+        .footer {
+            position: absolute;
+            bottom: 80px;
+            width: calc(100% - 120px);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 0 20px;
         }
 
-        footer p,
-        footer a {
-            color: var(--gray);
-            text-decoration: none;
-            margin-bottom: 0.5rem;
+        .signature-box { border-top: 1px solid #333; width: 200px; padding-top: 10px; }
+        .signature-font { 
+            font-family: 'Dancing Script', cursive; 
+            font-size: 24px; 
+            margin-bottom: -5px; 
         }
 
-        footer a:hover {
-            color: var(--primary-color);
-        }
-
-        footer .copyright {
-            border-top: 1px solid var(--gray);
-            padding-top: 2rem;
-            font-size: 0.9rem;
-        }
-
-        /* Floating Icons */
-        .floating-icon {
-            position: fixed;
-            bottom: 20px;
-            width: 50px;
-            height: 50px;
+        .seal {
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, #ffd700 0%, #ffed4e 30%, #ffd700 70%, #b8860b 100%);
             border-radius: 50%;
+            border: 5px double #8a6d3b;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            z-index: 1001;
+            font-size: 12px;
+            font-weight: bold;
+            color: #4a3a00;
+            box-shadow: 
+                0 4px 10px rgba(0,0,0,0.3),
+                inset 0 2px 4px rgba(255,255,255,0.5),
+                inset 0 -2px 4px rgba(0,0,0,0.5);
+            position: relative;
+            text-align: center;
+            line-height: 1.2;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
-        .floating-icon:hover {
-            transform: scale(1.1);
+        .seal::before {
+            content: "";
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.2);
         }
 
-        #admin-icon {
-            left: 20px;
-            background: var(--white);
-            color: var(--text-color);
-            width: 40px;
-            height: 40px;
-            font-size: 1.2rem;
-            border: 1px solid #ddd;
-        }
-
-        #admin-icon:hover {
-            background: var(--light-bg);
-        }
-
-        #whatsapp-icon {
-            right: 20px;
-            background: #25d366;
-            color: var(--white);
-        }
-
-        #whatsapp-icon:hover {
-            background: #128c7e;
-        }
-
-        #whatsapp-icon svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero h2 {
-                font-size: 2rem;
-            }
-
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-
-            nav {
-                display: none;
-            }
-
-            header {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .floating-icon {
-                width: 45px;
-                height: 45px;
-            }
-
-            #admin-icon {
-                width: 35px;
-                height: 35px;
-                font-size: 1rem;
-            }
-
-            #whatsapp-icon svg {
-                width: 20px;
-                height: 20px;
-            }
-
-            .promo-card img {
-                width: 200px;
-                height: 120px;
-            }
-
-            .modal-content {
-                padding: 1rem;
-            }
-
-            .payment-options {
-                gap: 0.5rem;
-            }
-
-            .form-group input,
-            .form-group textarea {
-                padding: 0.6rem;
-                font-size: 0.9rem;
-            }
+        /* Regras de Impressão */
+        @media print {
+            .admin-panel { display: none; }
+            .preview-area { padding: 0; background: none; }
+            body { background: none; }
+            .certificate { box-shadow: none; border: none; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>ORN<span>3D</span></h1>
-        <nav>
-            <a href="#about">Sobre</a>
-            <a href="#products">Produtos</a>
-            <a href="#contact">Contato</a>
-        </nav>
-        <div class="cart-icon" onclick="openCart()">
-            🛒 Carrinho
-            <span class="cart-count" id="cart-count">0</span>
-        </div>
-    </header>
-
-    <section class="hero">
-        <h2 id="hero-title">Transformando camadas em realidade</h2>
-        <p id="hero-subtitle">Decoração e utilitários em alta resistência e precisão. Explore nossa coleção de impressões 3D personalizadas.</p>
-        <a href="#products" class="btn-primary">Ver Produtos</a>
-    </section>
-
-    <section class="promotions">
-        <div class="promo-container">
-            <div class="promo-scroll">
-                <div class="promo-card">
-                    <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=300&q=80" alt="Promoção 1">
-                </div>
-                <div class="promo-card">
-                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=300&q=80" alt="Promoção 2">
-                </div>
-                <div class="promo-card">
-                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=300&q=80" alt="Promoção 3">
-                </div>
-                <div class="promo-card">
-                    <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=300&q=80" alt="Promoção 4">
-                </div>
-                <div class="promo-card">
-                    <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?auto=format&fit=crop&w=300&q=80" alt="Promoção 5">
-                </div>
-                <!-- Duplicar para scroll contínuo -->
-                <div class="promo-card">
-                    <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=300&q=80" alt="Promoção 1">
-                </div>
-                <div class="promo-card">
-                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=300&q=80" alt="Promoção 2">
-                </div>
-                <div class="promo-card">
-                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=300&q=80" alt="Promoção 3">
-                </div>
-                <div class="promo-card">
-                    <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=300&q=80" alt="Promoção 4">
-                </div>
-                <div class="promo-card">
-                    <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?auto=format&fit=crop&w=300&q=80" alt="Promoção 5">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="products" class="products">
-        <h2>Nossos Produtos</h2>
+    <div class="admin-panel">
+        <h2>Gerador Appleman</h2>
         
-        <div class="products-grid" id="products-grid">
-            <!-- Produtos serão carregados dinamicamente -->
+        <div class="form-group">
+            <label>Nome do Aluno</label>
+            <input type="text" id="inputName" value="John Appleman" oninput="updateCert()">
         </div>
-    </section>
 
-    <section id="about" class="about">
-        <h2>Sobre a ORN3D</h2>
-        <p id="about-text">Na ORN3D, somos especialistas em impressão 3D de alta qualidade. Utilizamos materiais premium como PETG para criar produtos duráveis e esteticamente agradáveis. Nossa missão é trazer inovação e criatividade para o seu dia a dia, transformando ideias em objetos tangíveis.</p>
-    </section>
-
-    <section id="contact" class="contact">
-        <h2>Entre em Contato</h2>
-        <form class="contact-form">
-            <input type="text" placeholder="Seu Nome" required>
-            <input type="email" placeholder="Seu Email" required>
-            <textarea placeholder="Sua Mensagem" rows="5" required></textarea>
-            <button type="submit">Enviar Mensagem</button>
-        </form>
-    </section>
-
-    <!-- Modal de Checkout -->
-    <div id="checkout-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Finalizar Compra</h2>
-            <div id="cart-summary"></div>
-            <form id="checkout-form">
-                <div class="form-group">
-                    <label for="customer-name">Nome Completo:</label>
-                    <input type="text" id="customer-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="customer-email">Email:</label>
-                    <input type="email" id="customer-email" required>
-                </div>
-                <div class="form-group">
-                    <label for="customer-address">Endereço Completo:</label>
-                    <textarea id="customer-address" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="cep">CEP:</label>
-                    <input type="text" id="cep" placeholder="00000-000" required>
-                    <button type="button" onclick="calculateFreight()">Calcular Frete</button>
-                </div>
-                <div id="freight-result"></div>
-                <h3>Escolha o método de pagamento:</h3>
-                <div class="payment-options">
-                    <button type="button" class="payment-btn credit" onclick="processPayment('Cartão de Crédito')">Cartão de Crédito</button>
-                    <button type="button" class="payment-btn debit" onclick="processPayment('Cartão de Débito')">Cartão de Débito</button>
-                    <button type="button" class="payment-btn pix" onclick="processPayment('PIX')">PIX</button>
-                </div>
-            </form>
+        <div class="form-group">
+            <label>Fonte do Título</label>
+            <select id="titleFont" onchange="updateCert()">
+                <option value="Montserrat">Montserrat</option>
+                <option value="Roboto">Roboto</option>
+                <option value="Playfair Display">Playfair Display</option>
+            </select>
         </div>
+
+        <div class="form-group">
+            <label>Fonte do Nome</label>
+            <select id="nameFont" onchange="updateCert()">
+                <option value="Montserrat">Montserrat</option>
+                <option value="Roboto">Roboto</option>
+                <option value="Playfair Display">Playfair Display</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Fonte do Texto</label>
+            <select id="textFont" onchange="updateCert()">
+                <option value="Montserrat">Montserrat</option>
+                <option value="Roboto">Roboto</option>
+                <option value="Playfair Display">Playfair Display</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <div class="form-row">
+                <div>
+                    <label>Espaçamento entre letras</label>
+                    <select id="letterSpacing" onchange="updateCert()">
+                        <option value="0px">Normal</option>
+                        <option value="1px">1px</option>
+                        <option value="2px">2px</option>
+                        <option value="3px">3px</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Espaçamento entre palavras</label>
+                    <select id="wordSpacing" onchange="updateCert()">
+                        <option value="0px">Normal</option>
+                        <option value="2px">2px</option>
+                        <option value="4px">4px</option>
+                        <option value="6px">6px</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Alinhamento do Texto</label>
+            <select id="textAlign" onchange="updateCert()">
+                <option value="center">Centralizado</option>
+                <option value="left">Esquerda</option>
+                <option value="right">Direita</option>
+                <option value="justify">Justificado</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Alinhamento da Lista</label>
+            <select id="listAlign" onchange="updateCert()">
+                <option value="left">Esquerda</option>
+                <option value="center">Centralizado</option>
+                <option value="justify">Justificado</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Texto do Certificado (Use &lt;b&gt; para negrito)</label>
+            <textarea id="inputText" rows="12" oninput="updateCert()">concluiu com êxito o treinamento avançado em Manutenção e Reparo de Ecossistema Apple, abrangendo diagnóstico de hardware, <b>microssoldagem</b> e software iOS/macOS.
+
+Principais Competências Validadas:
+Reparo de Placas-mãe (Logic Boards) e análise de esquemáticos.
+Substituição de periféricos (Telas, Baterias e componentes técnicos).
+Diagnóstico avançado via software e restauração de sistemas.
+Protocolos de segurança ESD (Descarga Eletrostática).</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Data de Emissão</label>
+            <input type="text" id="inputDate" value="15 de Março de 2026" oninput="updateCert()">
+        </div>
+
+        <button class="btn-print" onclick="window.print()">Gerar PDF / Imprimir</button>
+        <p style="font-size: 11px; color: #7f8c8d; margin-top: 20px;">Dica: Na tela de impressão, selecione "Salvar como PDF". Use &lt;b&gt;tags&lt;/b&gt; para texto em negrito.</p>
     </div>
 
-    <footer>
-        <div class="footer-content">
-            <div>
-                <h3>ORN3D</h3>
-                <p>Impressão 3D de alta qualidade</p>
+    <div class="preview-area">
+        <div class="certificate" id="cert-content">
+            <div class="watermark"></div>
+            
+            <div class="cert-title" id="displayTitle">Certificado de Excelência Técnica</div>
+            
+            <p class="cert-subtitle">Certificamos que</p>
+            <div class="cert-name" id="displayName">John Appleman</div>
+            
+            <div class="cert-text" id="displayText">
+                concluiu com êxito o treinamento avançado em Manutenção e Reparo de Ecossistema Apple, abrangendo diagnóstico de hardware, <b>microssoldagem</b> e software iOS/macOS.
             </div>
-            <div>
-                <h3>Links Úteis</h3>
-                <a href="#about">Sobre Nós</a>
-                <a href="#products">Produtos</a>
-                <a href="#contact">Contato</a>
-                <a href="admin.html">Painel Admin</a>
-            </div>
-            <div>
-                <h3>Redes Sociais</h3>
-                <a href="#">Instagram</a>
-                <a href="#">Facebook</a>
-                <a href="#">Twitter</a>
-            </div>
-        </div>
-        <div class="copyright">
-            <p id="footer-text">&copy; 2024 ORN3D - Impressão 3D Profissional. Todos os direitos reservados.</p>
-            <p><small id="footer-small">Siga-nos para ver o processo de impressão e novidades!</small></p>
-        </div>
-    </footer>
 
-    <!-- Ícones Flutuantes -->
-    <div id="admin-icon" onclick="window.location.href='admin.html'" title="Painel Administrativo">
-        ⚙️
-    </div>
-    <div id="whatsapp-icon" class="floating-icon" onclick="openWhatsApp()" title="Fale conosco no WhatsApp">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.742.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488"/>
-        </svg>
+            <div class="topics-heading">Principais Competências Validadas:</div>
+            <ul class="topics-list" id="topicsList">
+                <li>Reparo de Placas-mãe (Logic Boards) e análise de esquemáticos.</li>
+                <li>Substituição de periféricos (Telas, Baterias e componentes técnicos).</li>
+                <li>Diagnóstico avançado via software e restauração de sistemas.</li>
+                <li>Protocolos de segurança ESD (Descarga Eletrostática).</li>
+            </ul>
+
+            <div class="footer">
+                <div style="font-size: 12px;" id="displayDate">Data de Emissão: 15 de Março de 2026</div>
+                
+                <div class="signature-box">
+                    <div class="signature-font">Instrutor Técnico</div>
+                    <div style="font-size: 10px; text-transform: uppercase;">Assinatura</div>
+                </div>
+
+                <div class="seal">
+                    ALIENCELL<br>EXCELLENCE<br>APPLE
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        /* JS - Lógica Melhorada da Loja */
-        let cartItems = 0;
-        let cart = [];
-
-        function openWhatsApp() {
-            const phone = '5511999999999'; // Substitua pelo número real do WhatsApp
-            const message = encodeURIComponent('Olá, gostaria de mais informações sobre os produtos ORN3D');
-            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
-        }
-
-        // Carregar produtos do localStorage
-        function loadProducts() {
-            return JSON.parse(localStorage.getItem('orn3d_products')) || [
-                {
-                    id: '1',
-                    name: 'Vaso Canelado Minimalista (11cm)',
-                    description: 'Design moderno para decoração de interiores. Ultra resistente e elegante.',
-                    price: 45.90,
-                    image: 'https://via.placeholder.com/300x300?text=Vaso+Minimalista+ORN3D',
-                    tag: 'Material: PETG Premium'
-                },
-                {
-                    id: '2',
-                    name: 'Suporte Ergonômico p/ Notebook',
-                    description: 'Melhore sua postura no trabalho com este suporte elegante e funcional.',
-                    price: 89.00,
-                    image: 'https://via.placeholder.com/300x300?text=Suporte+Notebook',
-                    tag: 'Office'
-                },
-                {
-                    id: '3',
-                    name: 'Porta Lápis Geométrico',
-                    description: 'Organize sua mesa com estilo. Design moderno e resistente.',
-                    price: 32.50,
-                    image: 'https://via.placeholder.com/300x300?text=Porta+Lápis',
-                    tag: 'Escritório'
-                },
-                {
-                    id: '4',
-                    name: 'Luminária Abstrata 3D',
-                    description: 'Ilumine seu espaço com esta peça única de arte funcional.',
-                    price: 120.00,
-                    image: 'https://via.placeholder.com/300x300?text=Luminária+3D',
-                    tag: 'Decoração'
-                }
-            ];
-        }
-
-        // Carregar conteúdo do site
-        function loadSiteContent() {
-            const content = JSON.parse(localStorage.getItem('orn3d_site_content')) || {
-                heroTitle: 'Transformando camadas em realidade',
-                heroSubtitle: 'Decoração e utilitários em alta resistência e precisão. Explore nossa coleção de impressões 3D personalizadas.',
-                heroImage: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1350&q=80',
-                aboutText: 'Na ORN3D, somos especialistas em impressão 3D de alta qualidade. Utilizamos materiais premium como PETG para criar produtos duráveis e esteticamente agradáveis. Nossa missão é trazer inovação e criatividade para o seu dia a dia, transformando ideias em objetos tangíveis.',
-                footerText: '&copy; 2024 ORN3D - Impressão 3D Profissional. Todos os direitos reservados.',
-                footerSmall: 'Siga-nos para ver o processo de impressão e novidades!'
-            };
-
-            document.getElementById('hero-title').textContent = content.heroTitle;
-            document.getElementById('hero-subtitle').textContent = content.heroSubtitle;
-            document.querySelector('.hero').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${content.heroImage}')`;
-            document.getElementById('about-text').textContent = content.aboutText;
-            document.getElementById('footer-text').innerHTML = content.footerText;
-            document.getElementById('footer-small').textContent = content.footerSmall;
-        }
-
-        // Renderizar produtos
-        function renderProducts() {
-            const products = loadProducts();
-            const productsGrid = document.getElementById('products-grid');
-            productsGrid.innerHTML = '';
-
-            products.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card';
-                productCard.innerHTML = `
-                    <div class="product-image">
-                        <img src="${product.image}" alt="${product.name}">
-                        <span class="product-tag">${product.tag}</span>
-                    </div>
-                    <div class="product-info">
-                        <h3>${product.name}</h3>
-                        <p>${product.description}</p>
-                        <p class="price">R$ ${product.price.toFixed(2)}</p>
-                        <button class="btn-add" onclick="addToCart('${product.name}')">Adicionar ao Carrinho</button>
-                    </div>
-                `;
-                productsGrid.appendChild(productCard);
-            });
-        }
-
-        function addToCart(productName) {
-            cartItems++;
-            cart.push(productName);
-            document.getElementById('cart-count').innerText = cartItems;
+        function updateCert() {
+            // Atualiza o nome
+            document.getElementById('displayName').innerText = document.getElementById('inputName').value;
             
-            // Animação simples no botão
-            const button = event.target;
-            button.innerText = 'Adicionado!';
-            button.style.backgroundColor = '#28a745';
-            setTimeout(() => {
-                button.innerText = 'Adicionar ao Carrinho';
-                button.style.backgroundColor = '';
-            }, 1000);
-        }
-
-        function openCart() {
-            if(cartItems === 0) {
-                alert("Seu carrinho está vazio!");
-            } else {
-                showCheckoutModal();
+            // Processa o texto principal
+            const fullText = document.getElementById('inputText').value;
+            const lines = fullText.split('\n').map(line => line.trim()).filter(line => line);
+            
+            let mainText = '';
+            let competencies = [];
+            let inCompetencies = false;
+            
+            for (let line of lines) {
+                if (line === 'Principais Competências Validadas:') {
+                    inCompetencies = true;
+                    continue;
+                }
+                if (inCompetencies) {
+                    competencies.push(line);
+                } else {
+                    mainText += line + ' ';
+                }
             }
-        }
-
-        function showCheckoutModal() {
-            const modal = document.getElementById('checkout-modal');
-            const summary = document.getElementById('cart-summary');
-            summary.innerHTML = `<p>Itens no carrinho: ${cartItems}</p><ul>${cart.map(item => `<li>${item}</li>`).join('')}</ul>`;
-            modal.style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('checkout-modal').style.display = 'none';
-        }
-
-        function calculateFreight() {
-            const cep = document.getElementById('cep').value;
-            if (cep.length === 9) { // Simples validação
-                const freight = Math.floor(Math.random() * 20) + 10; // Simulação
-                document.getElementById('freight-result').innerHTML = `<p>Frete: R$ ${freight.toFixed(2)}</p>`;
-            } else {
-                alert('CEP inválido');
-            }
-        }
-
-        function processPayment(method) {
-            const name = document.getElementById('customer-name').value;
-            const email = document.getElementById('customer-email').value;
-            const address = document.getElementById('customer-address').value;
-            if (!name || !email || !address) {
-                alert('Preencha todos os campos!');
-                return;
-            }
-            alert(`Pagamento via ${method} processado com sucesso! (Simulação)`);
-            cart = [];
-            cartItems = 0;
-            document.getElementById('cart-count').innerText = cartItems;
-            closeModal();
-        }
-
-        // Smooth scrolling para links de navegação
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+            
+            document.getElementById('displayText').innerHTML = mainText.trim();
+            
+            // Atualiza tópicos
+            const topicsList = document.getElementById('topicsList');
+            topicsList.innerHTML = '';
+            competencies.forEach(comp => {
+                if (comp) {
+                    const li = document.createElement('li');
+                    li.innerHTML = comp;
+                    topicsList.appendChild(li);
+                }
             });
-        });
+            
+            // Atualiza a data
+            document.getElementById('displayDate').innerText = "Data de Emissão: " + document.getElementById('inputDate').value;
 
-        // Inicializar
-        loadSiteContent();
-        renderProducts();
+            // Atualiza fontes
+            const titleFont = document.getElementById('titleFont').value;
+            const nameFont = document.getElementById('nameFont').value;
+            const textFont = document.getElementById('textFont').value;
+
+            document.documentElement.style.setProperty('--title-font-family', titleFont + ', sans-serif');
+            document.documentElement.style.setProperty('--name-font-family', nameFont + ', sans-serif');
+            document.documentElement.style.setProperty('--text-font-family', textFont + ', sans-serif');
+
+            // Atualiza espaçamentos
+            const letterSpacing = document.getElementById('letterSpacing').value;
+            const wordSpacing = document.getElementById('wordSpacing').value;
+            document.documentElement.style.setProperty('--text-letter-spacing', letterSpacing);
+            document.documentElement.style.setProperty('--text-word-spacing', wordSpacing);
+
+            // Atualiza alinhamentos
+            const textAlign = document.getElementById('textAlign').value;
+            document.documentElement.style.setProperty('--text-align', textAlign);
+
+            const listAlign = document.getElementById('listAlign').value;
+            document.documentElement.style.setProperty('--list-align', listAlign);
+        }
+
+        // Inicializa
+        updateCert();
     </script>
-
 </body>
 </html>
